@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS messenger.message (
-    'message_id' int auto_increment,
-    `user_id` int,
-    'message_contents' varchar(255) DEFAULT NULL,
-    `message_sent_date` date
-) DEFAULT CHARSET=utf8;

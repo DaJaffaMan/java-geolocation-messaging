@@ -11,21 +11,21 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "org/springframework/data/elasticsearch/repositories")
+@EnableElasticsearchRepositories(basePackages = "/repository")
 public class DatabaseConfig {
 
     @Bean
-    public Node node(){
+    public Node node() {
         return nodeBuilder().local(true).node();
     }
 
     @Bean
-    public Client client(Node node){
+    public Client client(Node node) {
         return node.client();
     }
 
     @Bean
-    public ElasticsearchOperations elasticsearchOperations(Client client){
+    public ElasticsearchOperations elasticsearchOperations(Client client) {
         return new ElasticsearchTemplate(client);
     }
 

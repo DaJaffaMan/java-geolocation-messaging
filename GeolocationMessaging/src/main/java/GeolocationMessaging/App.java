@@ -1,13 +1,9 @@
 package GeolocationMessaging;
 
 import GeolocationMessaging.config.DatabaseConfig;
-import GeolocationMessaging.message.Message;
+import GeolocationMessaging.repository.MessageRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.Date;
-
-import static spark.Spark.*;
 
 public class App 
 {
@@ -15,8 +11,7 @@ public class App
 
         ApplicationContext context = new AnnotationConfigApplicationContext(DatabaseConfig.class);
 
-
-        Message message = new Message(1,1,"a", new Date());
+        MessageRepository messageRepository = context.getBean(MessageRepository.class);
 
     }
 }

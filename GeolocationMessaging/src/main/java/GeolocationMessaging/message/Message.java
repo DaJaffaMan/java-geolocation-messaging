@@ -14,7 +14,7 @@ public class Message {
     private String messageContents;
     private Date messageSentDate;
 
-    public Message(){
+    public Message() {
 
     }
 
