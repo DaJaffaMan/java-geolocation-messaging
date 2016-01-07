@@ -1,25 +1,22 @@
 package GeolocationMessaging.message;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import java.util.Date;
 
-@Entity
-@Table(name="message", schema="messenger")
+@Document(indexName = "messenger", type = "message")
 public class Message {
 
-    @Column(name="message_id")
+    @Id
     private int messageId;
-
-    @Column(name="user_id")
     private int userId;
-
-    @Column(name="message_contents")
     private String messageContents;
-
-    @Column(name="message_sent_date")
     private Date messageSentDate;
+
+    public Message(){
+
+    }
 
     public Message(int messageId, int userId, String messageContents, Date messageSentDate) {
         this.messageId = messageId;

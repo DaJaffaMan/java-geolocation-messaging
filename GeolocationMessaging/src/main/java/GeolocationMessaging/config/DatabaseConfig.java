@@ -16,7 +16,6 @@ public class DatabaseConfig {
 
     @Bean
     public Node node(){
-
         return nodeBuilder().local(true).node();
     }
 
