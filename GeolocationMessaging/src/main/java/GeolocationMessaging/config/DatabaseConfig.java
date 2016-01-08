@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "/repository")
+@EnableElasticsearchRepositories(basePackages = "GeolocationMessaging.repositories")
 public class DatabaseConfig {
 
     @Bean
@@ -25,7 +25,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public ElasticsearchOperations elasticsearchOperations(Client client) {
+    public ElasticsearchTemplate elasticsearchTemplate(Client client) {
         return new ElasticsearchTemplate(client);
     }
 
