@@ -9,6 +9,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class MessageRepositoryIntegrationTest {
 
@@ -21,11 +24,13 @@ public class MessageRepositoryIntegrationTest {
         messageRepository = context.getBean(MessageRepository.class);
     }
 
-    // TODO This test is broke and does nothing
     @Test
-    public void test() {
+    public void getMessageContents() {
         messageRepository.save(new Message(1, 1, "foo", new Date()));
 
-        messageRepository.findByMessageContentsLike("foo");
+        List<Message> foo = messageRepository.findByMessageContentsLike("foo");
+
+
+        assertEquals("foo",foo.get(0).getMessageContents());
     }
 }
