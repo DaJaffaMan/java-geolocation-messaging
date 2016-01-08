@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchCrudReposi
 
 import java.util.List;
 
-public interface MessageRepository extends ElasticsearchCrudRepository<Message, String> {
+public interface MessageRepository extends ElasticsearchCrudRepository<Message, Integer> {
 
     List<Message> findByMessageId(Integer messageId);
 
