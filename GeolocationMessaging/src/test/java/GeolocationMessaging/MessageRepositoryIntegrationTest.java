@@ -3,6 +3,7 @@ package GeolocationMessaging;
 import GeolocationMessaging.config.DatabaseConfig;
 import GeolocationMessaging.message.Message;
 import GeolocationMessaging.repositories.MessageRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -22,15 +23,40 @@ public class MessageRepositoryIntegrationTest {
     public void setup() {
         context = new AnnotationConfigApplicationContext(DatabaseConfig.class);
         messageRepository = context.getBean(MessageRepository.class);
+
+        messageRepository.save(new Message(1, 2, "foo", new Date()));
     }
 
     @Test
-    public void getMessageContents() {
-        messageRepository.save(new Message(1, 1, "foo", new Date()));
+    public void testGetMessageByMessageId() {
+        List<Message> messages = messageRepository.findByMessageId(1);
 
-        List<Message> foo = messageRepository.findByMessageContentsLike("foo");
+        assertEquals(1, messages.get(0).getMessageId());
+        assertEquals(2, messages.get(0).getUserId());
+        assertEquals("foo", messages.get(0).getMessageContents());
+    }
 
+    @Test
+    public void testGetMessageByUserId() {
+        List<Message> messages = messageRepository.findByUserId(2);
 
-        assertEquals("foo",foo.get(0).getMessageContents());
+        assertEquals(1, messages.get(0).getMessageId());
+        assertEquals(2, messages.get(0).getUserId());
+        assertEquals("foo", messages.get(0).getMessageContents());
+    }
+
+    @Test
+    public void testGetMessageByContentsLike() {
+
+        List<Message> messages = messageRepository.findByMessageContentsLike("foo");
+
+        assertEquals(1, messages.get(0).getMessageId());
+        assertEquals(2, messages.get(0).getUserId());
+        assertEquals("foo", messages.get(0).getMessageContents());
+    }
+
+    @After
+    public void teardown() {
+        messageRepository.delete(0);
     }
 }
