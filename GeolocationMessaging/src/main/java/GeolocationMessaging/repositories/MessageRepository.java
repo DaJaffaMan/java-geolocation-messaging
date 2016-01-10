@@ -1,6 +1,6 @@
 package GeolocationMessaging.repositories;
 
-import GeolocationMessaging.message.Message;
+import GeolocationMessaging.messages.Message;
 import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package GeolocationMessaging;
 
 import GeolocationMessaging.config.DatabaseConfig;
-import GeolocationMessaging.message.Message;
+import GeolocationMessaging.messages.Message;
 import GeolocationMessaging.repositories.MessageRepository;
 import org.junit.After;
 import org.junit.Before;

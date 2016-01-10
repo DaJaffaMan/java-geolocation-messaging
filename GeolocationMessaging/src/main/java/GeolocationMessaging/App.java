@@ -5,12 +5,14 @@ import GeolocationMessaging.repositories.MessageRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class App 
-{
+public class App {
+
+    public static ApplicationContext context;
+
     public static void main( String[] args ) {
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(DatabaseConfig.class);
-        MessageRepository messageRepository = context.getBean(MessageRepository.class);
+        context = new AnnotationConfigApplicationContext(DatabaseConfig.class);
+        final MessageRepository messageRepository = context.getBean(MessageRepository.class);
 
     }
 }
