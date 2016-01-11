@@ -1,4 +1,4 @@
-package GeolocationMessaging;
+package GeolocationMessaging.integration;
 
 import GeolocationMessaging.config.DatabaseConfig;
 import GeolocationMessaging.messages.Message;

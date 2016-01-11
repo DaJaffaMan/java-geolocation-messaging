@@ -1,21 +1,19 @@
 package GeolocationMessaging.messages;
 
-import GeolocationMessaging.App;
 import GeolocationMessaging.repositories.MessageRepository;
 import org.elasticsearch.common.inject.Inject;
-import org.springframework.context.ApplicationContext;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class MessageDao {
 
-    private final ApplicationContext context;
     private final MessageRepository messageRepository;
 
-    public MessageDao(){
-        context = App.context;
-        messageRepository = context.getBean(MessageRepository.class);
+    @Inject
+    public MessageDao(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
     }
 
     public List<Message> getMessageByMessageId(Integer messageId) {

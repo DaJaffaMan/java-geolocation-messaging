@@ -5,7 +5,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.Date;
 
-@Document(indexName = "messenger", type = "message")
+@Document(indexName = "messenger", type = "messages")
 public class Message {
 
     @Id
