@@ -1,12 +1,13 @@
 package GeolocationMessaging.repositories;
 
-import GeolocationMessaging.messages.Message;
+import GeolocationMessaging.entities.Message;
 import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
 
 import java.util.List;
 
 public interface MessageRepository extends ElasticsearchCrudRepository<Message, Integer> {
 
+    // Creates a query based on method name for Elasticsearch
     List<Message> findByMessageId(Integer messageId);
 
     List<Message> findByUserId(Integer userId);

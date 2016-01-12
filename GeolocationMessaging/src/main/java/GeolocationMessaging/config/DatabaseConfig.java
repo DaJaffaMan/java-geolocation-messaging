@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
 @Configuration
+// Tells spring where to find repositories
 @EnableElasticsearchRepositories(basePackages = "GeolocationMessaging.repositories")
 public class DatabaseConfig {
 
