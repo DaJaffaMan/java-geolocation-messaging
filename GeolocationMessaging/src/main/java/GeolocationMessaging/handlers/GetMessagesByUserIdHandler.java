@@ -3,12 +3,12 @@ package GeolocationMessaging.handlers;
 import GeolocationMessaging.entities.Message;
 import GeolocationMessaging.repositories.MessageRepository;
 import com.google.gson.Gson;
-import org.elasticsearch.common.inject.Inject;
 import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Component
