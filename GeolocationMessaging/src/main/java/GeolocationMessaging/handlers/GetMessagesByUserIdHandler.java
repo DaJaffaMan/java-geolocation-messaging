@@ -12,20 +12,21 @@ import spark.Route;
 import java.util.List;
 
 @Component
-public class GetMessagesByMessageIdHandler implements Route {
+public class GetMessagesByUserIdHandler implements Route {
 
     private final MessageRepository messageRepository;
     private final Gson gson;
 
     @Inject
-    public GetMessagesByMessageIdHandler(MessageRepository messageRepository) {
-        gson = new Gson();
+    public GetMessagesByUserIdHandler(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
+        gson = new Gson();
+
     }
 
     public Object handle(Request request, Response response) throws Exception {
-        Integer messageRequest = Integer.parseInt(request.params(":messageId"));
-        List<Message> messageList = messageRepository.findByMessageId(messageRequest);
+        Integer userId = Integer.parseInt(request.params(":userId"));
+        List<Message> messageList = messageRepository.findByUserId(userId);
 
         return gson.toJson(messageList);
     }
