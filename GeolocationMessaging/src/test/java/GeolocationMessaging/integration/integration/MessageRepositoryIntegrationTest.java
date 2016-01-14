@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.util.Date;
 
@@ -21,7 +22,6 @@ import static spark.Spark.stop;
 public class MessageRepositoryIntegrationTest {
 
     CloseableHttpClient httpClient;
-    HttpEntity httpEntity;
 
     @Before
     public void setup() {
@@ -45,13 +45,17 @@ public class MessageRepositoryIntegrationTest {
 
             assertEquals("[{\"messageId\":1,\"userId\":2,\"messageContents\":\"foo\",\"messageSentDate\":" + new Date() + ",\"location\":{\"lat\":50.0,\"lon\":50.0}}]", message);
 
-        } catch (IOException e) {
+        } catch (HTTPException e) {
             e.printStackTrace();
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 
     @Test
     public void testGetMessageByUserId() {
+
+        HttpEntity httpEntity;
 
         HttpUriRequest addMessageRequest = new HttpPost("http://localhost:4567/add/message/1/2/foo/50/50");
         HttpUriRequest getMessageRequest = new HttpGet("http://localhost:4567/get/message/userid/2");
@@ -64,8 +68,10 @@ public class MessageRepositoryIntegrationTest {
 
             assertEquals("[{\"messageId\":1,\"userId\":2,\"messageContents\":\"foo\",\"messageSentDate\":" + new Date() + ",\"location\":{\"lat\":50.0,\"lon\":50.0}}]", message);
 
-        } catch (IOException e) {
+        } catch (HTTPException e) {
             e.printStackTrace();
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 
