@@ -1,4 +1,4 @@
-package GeolocationMessaging.integration.integration;
+package GeolocationMessaging.integration;
 
 import GeolocationMessaging.App;
 import org.apache.http.HttpEntity;
