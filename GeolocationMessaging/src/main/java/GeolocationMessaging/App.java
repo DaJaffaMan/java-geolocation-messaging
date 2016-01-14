@@ -6,8 +6,7 @@ import GeolocationMessaging.handlers.GetMessagesByUserIdHandler;
 import GeolocationMessaging.handlers.PostMessageHandler;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class App {
 
@@ -28,8 +27,8 @@ public class App {
 
     }
 
-//    public static void shutdown() {
-//        stop();
-//        context.close();
-//    }
+    public static void shutdown() {
+        stop();
+        context.close();
+    }
 }

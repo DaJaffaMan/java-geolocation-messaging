@@ -22,7 +22,8 @@ public class DatabaseConfig {
         return nodeBuilder().local(true).node();
     }
 
-    @Bean
+    // calls close method in node class
+    @Bean(destroyMethod = "close")
     public Client client(Node node) {
         return node.client();
     }
