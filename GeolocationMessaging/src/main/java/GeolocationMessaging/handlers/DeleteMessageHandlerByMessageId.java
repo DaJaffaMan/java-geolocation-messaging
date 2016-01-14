@@ -25,6 +25,6 @@ public class DeleteMessageHandlerByMessageId implements Route {
 
         messageRepository.delete(message);
 
-        return null;
+        return "message removed";
     }
 }

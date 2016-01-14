@@ -32,6 +32,6 @@ public class PostMessageHandler implements Route {
 
         messageRepository.save(message);
 
-        return null;
+        return "Message added";
     }
 }
