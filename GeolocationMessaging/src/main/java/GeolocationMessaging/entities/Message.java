@@ -2,6 +2,7 @@ package GeolocationMessaging.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 import java.util.Date;
 
@@ -13,16 +14,18 @@ public class Message {
     private int userId;
     private String messageContents;
     private Date messageSentDate;
+    private GeoPoint location;
 
     public Message() {
 
     }
 
-    public Message(int messageId, int userId, String messageContents, Date messageSentDate) {
+    public Message(int messageId, int userId, String messageContents, Date messageSentDate, double lat, double lon) {
         this.messageId = messageId;
         this.userId = userId;
         this.messageContents = messageContents;
         this.messageSentDate = messageSentDate;
+        location = new GeoPoint(lat, lon);
     }
 
     public int getMessageId() {
@@ -56,4 +59,13 @@ public class Message {
     public void setMessageSentDate(Date messageSentDate) {
         this.messageSentDate = messageSentDate;
     }
+
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
+    }
+
 }

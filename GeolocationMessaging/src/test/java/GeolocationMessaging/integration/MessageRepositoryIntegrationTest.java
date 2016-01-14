@@ -1,14 +1,19 @@
 package GeolocationMessaging.integration;
 
-import GeolocationMessaging.config.DatabaseConfig;
+import GeolocationMessaging.App;
 import GeolocationMessaging.entities.Message;
-import GeolocationMessaging.repositories.MessageRepository;
-import org.junit.After;
+import com.google.gson.Gson;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,47 +21,42 @@ import static org.junit.Assert.assertEquals;
 
 public class MessageRepositoryIntegrationTest {
 
-    ApplicationContext context;
-    MessageRepository messageRepository;
+    private CloseableHttpClient httpClient;
+    private Gson gson;
 
     @Before
     public void setup() {
-        context = new AnnotationConfigApplicationContext(DatabaseConfig.class);
-        messageRepository = context.getBean(MessageRepository.class);
-
-        messageRepository.save(new Message(1, 2, "foo", new Date()));
+        httpClient = HttpClientBuilder.create().build();
+        gson = new Gson();
+        App.main(null);
     }
 
     @Test
     public void testGetMessageByMessageId() {
-        List<Message> messages = messageRepository.findByMessageId(1);
 
-        assertEquals(1, messages.get(0).getMessageId());
-        assertEquals(2, messages.get(0).getUserId());
-        assertEquals("foo", messages.get(0).getMessageContents());
+        HttpEntity httpEntity;
+        List<Message> messages;
+
+        HttpUriRequest addMessageRequest = new HttpPost("http://localhost:4567/add/message/1/2/foo/50/50");
+        HttpUriRequest getMessageRequest = new HttpGet("http://localhost:4567/get/message/messageid/1");
+
+        try {
+            httpClient.execute(addMessageRequest);
+            httpEntity = httpClient.execute(getMessageRequest).getEntity();
+
+            String message = EntityUtils.toString(httpEntity);
+
+            assertEquals("[{\"messageId\":1,\"userId\":2,\"messageContents\":\"foo\",\"messageSentDate\":" + new Date() + ",\"location\":{\"lat\":50.0,\"lon\":50.0}}]", message);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    public void testGetMessageByUserId() {
-        List<Message> messages = messageRepository.findByUserId(2);
-
-        assertEquals(1, messages.get(0).getMessageId());
-        assertEquals(2, messages.get(0).getUserId());
-        assertEquals("foo", messages.get(0).getMessageContents());
-    }
-
-    @Test
-    public void testGetMessageByContentsLike() {
-
-        List<Message> messages = messageRepository.findByMessageContentsLike("foo");
-
-        assertEquals(1, messages.get(0).getMessageId());
-        assertEquals(2, messages.get(0).getUserId());
-        assertEquals("foo", messages.get(0).getMessageContents());
-    }
-
-    @After
-    public void teardown() {
-        messageRepository.delete(0);
-    }
+//    @After
+//    public void teardown() throws Exception {
+//        httpClient.close();
+//        stop();
+//        App.shutdown();
+//    }
 }
