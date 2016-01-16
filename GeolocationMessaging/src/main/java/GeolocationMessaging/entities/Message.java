@@ -67,5 +67,4 @@ public class Message {
     public void setLocation(GeoPoint location) {
         this.location = location;
     }
-
 }

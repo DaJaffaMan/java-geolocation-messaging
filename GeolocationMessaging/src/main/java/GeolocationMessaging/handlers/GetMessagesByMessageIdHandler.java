@@ -2,7 +2,6 @@ package GeolocationMessaging.handlers;
 
 import GeolocationMessaging.entities.Message;
 import GeolocationMessaging.repositories.MessageRepository;
-import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
@@ -15,18 +14,17 @@ import java.util.List;
 public class GetMessagesByMessageIdHandler implements Route {
 
     private final MessageRepository messageRepository;
-    private final Gson gson;
 
     @Inject
     public GetMessagesByMessageIdHandler(MessageRepository messageRepository) {
-        gson = new Gson();
         this.messageRepository = messageRepository;
     }
 
+    @Override
     public Object handle(Request request, Response response) throws Exception {
-        Integer messageRequest = Integer.parseInt(request.params(":messageId"));
-        List<Message> messageList = messageRepository.findByMessageId(messageRequest);
+        final Integer messageRequest = Integer.parseInt(request.params(":messageId"));
+        final List<Message> messageList = messageRepository.findByMessageId(messageRequest);
 
-        return gson.toJson(messageList);
+        return messageList;
     }
 }

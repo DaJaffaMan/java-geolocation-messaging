@@ -21,14 +21,13 @@ public class PostMessageHandler implements Route {
     }
 
     public Object handle(Request request, Response response) throws Exception {
+        final int messageId = Integer.parseInt(request.params(":messageId"));
+        final int userId = Integer.parseInt(request.params(":userId"));
+        final String messageContents = request.params(":messageContents");
+        final double lat = Double.parseDouble(request.params(":lat"));
+        final double lon = Double.parseDouble(request.params(":lon"));
 
-        int messageId = Integer.parseInt(request.params(":messageId"));
-        int userId = Integer.parseInt(request.params(":userId"));
-        String messageContents = request.params(":messageContents");
-        double lat = Double.parseDouble(request.params(":lat"));
-        double lon = Double.parseDouble(request.params(":lon"));
-
-        Message message = new Message(messageId, userId, messageContents, new Date(), lat, lon);
+        final Message message = new Message(messageId, userId, messageContents, new Date(), lat, lon);
 
         messageRepository.save(message);
 

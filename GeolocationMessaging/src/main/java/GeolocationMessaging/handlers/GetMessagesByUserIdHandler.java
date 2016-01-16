@@ -21,12 +21,11 @@ public class GetMessagesByUserIdHandler implements Route {
     public GetMessagesByUserIdHandler(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
         gson = new Gson();
-
     }
 
     public Object handle(Request request, Response response) throws Exception {
-        Integer userId = Integer.parseInt(request.params(":userId"));
-        List<Message> messageList = messageRepository.findByUserId(userId);
+        final Integer userId = Integer.parseInt(request.params(":userId"));
+        final List<Message> messageList = messageRepository.findByUserId(userId);
 
         return gson.toJson(messageList);
     }
