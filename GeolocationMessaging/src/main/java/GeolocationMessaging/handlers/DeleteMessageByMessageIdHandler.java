@@ -9,12 +9,12 @@ import spark.Route;
 import javax.inject.Inject;
 import java.util.List;
 
-public class DeleteMessageHandlerByMessageId implements Route {
+public class DeleteMessageByMessageIdHandler implements Route {
 
     MessageRepository messageRepository;
 
     @Inject
-    public DeleteMessageHandlerByMessageId(MessageRepository messageRepository) {
+    public DeleteMessageByMessageIdHandler(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 

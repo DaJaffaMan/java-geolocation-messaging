@@ -1,7 +1,7 @@
 package GeolocationMessaging;
 
 import GeolocationMessaging.config.DatabaseConfig;
-import GeolocationMessaging.handlers.GetMessagesByLocation;
+import GeolocationMessaging.handlers.GetMessagesByLocationHandler;
 import GeolocationMessaging.handlers.GetMessagesByMessageIdHandler;
 import GeolocationMessaging.handlers.GetMessagesByUserIdHandler;
 import GeolocationMessaging.handlers.PostMessageHandler;
@@ -19,7 +19,7 @@ public class App {
         final GetMessagesByMessageIdHandler messageIdHandler = context.getBean(GetMessagesByMessageIdHandler.class);
         final GetMessagesByUserIdHandler userIdHandler = context.getBean(GetMessagesByUserIdHandler.class);
         final PostMessageHandler postMessageHandler = context.getBean(PostMessageHandler.class);
-        final GetMessagesByLocation messagesByLocation = context.getBean(GetMessagesByLocation.class);
+        final GetMessagesByLocationHandler messagesByLocation = context.getBean(GetMessagesByLocationHandler.class);
 
         post("/add/message/:messageid/:userid/:messageContents/:lat/:lon", postMessageHandler);
 
