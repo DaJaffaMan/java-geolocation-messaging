@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -15,8 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +55,60 @@ public class MessageRepositoryIntegrationTest {
     }
 
     @Test
+    public void testGetMessageByUserIdHttpResponse() {
+
+        HttpResponse httpResponse;
+
+        HttpUriRequest getMessageRequest = new HttpGet("http://localhost:4567/get/message/userid/2");
+
+        try {
+
+            httpResponse = httpClient.execute(getMessageRequest);
+
+            assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetMessageByLocationHttpResponse() {
+
+        HttpResponse httpResponse;
+
+        HttpUriRequest getMessageRequest = new HttpGet("http://localhost:4567/get/messages/messagelocation/0/0");
+
+        try {
+
+            httpResponse = httpClient.execute(getMessageRequest);
+
+            assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPostMessage() {
+
+        HttpResponse httpResponse;
+
+        HttpUriRequest postMessageRequest = new HttpPost("http://localhost:4567/add/message/1/2/foo/0/0");
+
+        try {
+
+            httpResponse = httpClient.execute(postMessageRequest);
+
+            assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    @Test
     public void testGetMessageContentsByMessageId() {
 
         HttpEntity httpEntity;
@@ -68,7 +121,6 @@ public class MessageRepositoryIntegrationTest {
             httpEntity = httpClient.execute(getMessageRequest).getEntity();
 
             String entityString = EntityUtils.toString(httpEntity);
-
             List<Message> messages = gson.fromJson(entityString, new TypeToken<ArrayList<Message>>() {
             }.getType());
 
@@ -106,15 +158,14 @@ public class MessageRepositoryIntegrationTest {
     @Test
     public void testGetMessageContentsByLocation() {
 
-        CriteriaQuery query;
-        ElasticsearchTemplate template;
+        HttpEntity httpEntity;
 
         HttpUriRequest addMessageRequest = new HttpPost("http://localhost:4567/add/message/1/2/foo/50.00000001/50.00000001");
         HttpUriRequest getMessageRequest = new HttpGet("http://localhost:4567/get/messages/messagelocation/50/50");
 
         try {
             httpClient.execute(addMessageRequest);
-            HttpEntity httpEntity = httpClient.execute(getMessageRequest).getEntity();
+            httpEntity = httpClient.execute(getMessageRequest).getEntity();
 
             String entityString = EntityUtils.toString(httpEntity);
 
@@ -125,7 +176,32 @@ public class MessageRepositoryIntegrationTest {
         } catch (IOException i) {
             i.printStackTrace();
         }
+    }
 
+    @Test
+    public void testDeleteMessageByMessageId() {
+
+        HttpEntity httpEntity;
+        List<Message> message;
+
+        HttpUriRequest addMessageRequest = new HttpPost("http://localhost:4567/add/message/1/2/foo/0/0");
+        HttpUriRequest deleteMessageRequest = new HttpDelete("http://localhost:4567/delete/message/messageid/1");
+        HttpUriRequest getMessageRequest = new HttpGet("http://localhost:4567/get/message/messageid/1");
+
+        try {
+            httpClient.execute(addMessageRequest);
+            httpClient.execute(deleteMessageRequest);
+            httpEntity = httpClient.execute(getMessageRequest).getEntity();
+
+            String entityString = EntityUtils.toString(httpEntity);
+            message = gson.fromJson(entityString, new TypeToken<ArrayList<Message>>() {
+            }.getType());
+
+            assertEquals("", message.get(0).getMessageContents());
+
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
 
     @After

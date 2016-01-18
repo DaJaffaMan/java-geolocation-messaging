@@ -2,6 +2,7 @@ package GeolocationMessaging.handlers;
 
 import GeolocationMessaging.entities.Message;
 import GeolocationMessaging.repositories.MessageRepository;
+import org.springframework.stereotype.Component;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -9,6 +10,7 @@ import spark.Route;
 import javax.inject.Inject;
 import java.util.List;
 
+@Component
 public class DeleteMessageByMessageIdHandler implements Route {
 
     MessageRepository messageRepository;
