@@ -22,10 +22,14 @@ public class DeleteMessageByMessageIdHandler implements Route {
 
     public Object handle(Request request, Response response) throws Exception {
 
-        int messageId = Integer.parseInt(request.params("messageid"));
+        int messageId = Integer.parseInt(request.params(":messageid"));
         List<Message> message = messageRepository.findByMessageId(messageId);
 
-        messageRepository.delete(message);
+        if (message.isEmpty()) {
+            return "message does not exist";
+        } else {
+            messageRepository.delete(message);
+        }
 
         return "message removed";
     }
