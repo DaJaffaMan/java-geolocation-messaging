@@ -2,7 +2,6 @@ package GeolocationMessaging.handlers;
 
 import GeolocationMessaging.entities.Message;
 import GeolocationMessaging.repositories.GeoMessageRepository;
-import com.google.gson.Gson;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.stereotype.Component;
 import spark.Request;
@@ -16,12 +15,10 @@ import java.util.List;
 public class GetMessagesByLocationHandler implements Route {
 
     private final GeoMessageRepository geoMessageRepository;
-    private final Gson gson;
 
     @Inject
     public GetMessagesByLocationHandler(GeoMessageRepository geoMessageRepository) {
         this.geoMessageRepository = geoMessageRepository;
-        gson = new Gson();
     }
 
     public Object handle(Request request, Response response) throws Exception {
@@ -31,6 +28,6 @@ public class GetMessagesByLocationHandler implements Route {
 
         final List<Message> messages = geoMessageRepository.getGeoMessage(geoPoint);
 
-        return gson.toJson(messages);
+        return messages;
     }
 }

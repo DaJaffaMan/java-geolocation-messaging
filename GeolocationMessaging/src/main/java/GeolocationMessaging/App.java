@@ -2,6 +2,7 @@ package GeolocationMessaging;
 
 import GeolocationMessaging.config.DatabaseConfig;
 import GeolocationMessaging.handlers.*;
+import GeolocationMessaging.transformer.JsonTransformer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static spark.Spark.*;
@@ -21,11 +22,11 @@ public class App {
 
         post("/add/message/:messageid/:userid/:messageContents/:lat/:lon", postMessageHandler);
 
-        get("/get/message/messageid/:messageId", getMessageByMessageId);
+        get("/get/message/messageid/:messageId", getMessageByMessageId, new JsonTransformer());
 
-        get("/get/message/userid/:userId", getMessageByUserId);
+        get("/get/message/userid/:userId", getMessageByUserId, new JsonTransformer());
 
-        get("/get/messages/messagelocation/:lat/:lon", getMessagesByLocation);
+        get("/get/messages/messagelocation/:lat/:lon", getMessagesByLocation, new JsonTransformer());
 
         delete("/delete/message/messageid/:messageid", deleteMessageByMessageId);
 
